@@ -46,6 +46,34 @@ import sys
 # Then print_words() and print_top() can just call the utility function.
 
 ###
+def wordcountDict(filename):
+    dict={}
+    f=open(filename,'rU')
+    for line in f:
+        lowerline=line.lower()
+        words=lowerline.split()
+        for word in words:
+            if not (word in dict):
+                dict[word]=1
+            else:
+                dict[word] +=1         
+    f.close()
+    return dict
+
+def print_words(filename):
+    dict= wordcountDict(filename)
+    keys=sorted(dict.keys())
+    for key in keys:
+        print key+' '+str(dict[key])
+
+def print_top(filename):
+    dict=wordcountDict(filename)
+    def sortByCount(key):
+        return dict[key]
+    keys=sorted(dict,key=sortByCount)#dict is a list of keys?
+    keys.reverse()
+    for key in keys[:20]:
+        print key+' '+str(dict[key])
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
